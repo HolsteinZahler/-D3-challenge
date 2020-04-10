@@ -53,11 +53,12 @@ function yScale(data, chosenYAxis, hsize) {
     .domain([minY-0.2*(maxY-minY),maxY+0.2*(maxY-minY)])
     .range([hsize, 0]);
 
-
+/*
   console.log(`scale function sees`);
   console.log(chosenYAxis);
   console.log(`yscale rendered y`);
   console.log(LinearScale(20));
+*/
   return LinearScale;
   }
 
@@ -91,11 +92,11 @@ function renderCirclesX(circlesGroup, newXScale, chosenXAxis) {
     .duration(1000)
     .attr("cx", d => newXScale(d[chosenXAxis]));
 
-
+/*
   console.log(chosenXAxis);
   console.log(`rendered x`);
   console.log(newXScale(20));
-
+*/
   return circlesGroup;
 }
 
@@ -112,10 +113,11 @@ function renderCirclesY(circlesGroup, chosenYAxis, data, hsize) {
   circlesGroup.transition()
     .duration(1000)
     .attr("cy", d => newYScale(d[chosenYAxis]));
-
+/*
   console.log(chosenYAxis);
   console.log(`renderCirclesY rendered y`);
   console.log(newYScale(20));
+*/
   return circlesGroup;
 }
 
@@ -123,7 +125,7 @@ function renderCirclesTextX(circlesText, newXScale, chosenXAxis) {
 
   circlesText.transition()
     .duration(1000)
-    .attr("x", d => newXScale(d[chosenXAxis])+90)
+    .attr("x", d => newXScale(d[chosenXAxis])+92)
 
   return circlesText;
 }
@@ -138,7 +140,7 @@ function renderCirclesTextY(circlesText, newXScale, chosenXAxis, chosenYAxis, da
 
   circlesText.transition()
     .duration(1000)
-    .attr("x", d => newXScale(d[chosenXAxis])+90)
+    .attr("x", d => newXScale(d[chosenXAxis])+92)
     .attr("y", d => newYScale(d[chosenYAxis])+25);
 
   return circlesText;
@@ -175,8 +177,10 @@ function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
   var toolTip = d3.tip().attr("class", "tooltip")
     .offset([80, -60])
     .html(function(d) {
-      return (`${d.abbr}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
+      return (`${d.state}<br>${xlabel} ${d[chosenXAxis]}<br>${ylabel} ${d[chosenYAxis]}`);
     });
+  
+  var selectedCircle = circlesGroup.selectAll("circle");
 
   circlesGroup.call(toolTip);
 
@@ -229,24 +233,26 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
   .data(censusData)
   .enter()
   .append("circle")
+  .attr("class", "bubbles")
   .attr("cx", d => xLinearScale(d[chosenXAxis]))
   .attr("cy", d => yLinearScale(d[chosenYAxis]))
-  .attr("r", 15)
+  .attr("r", 13)
   .attr("fill", "blue")
   .attr("opacity", ".5")
-  .style("stroke", "black");
+//  .style("stroke", "black");
 
   var getCirclesText = svg.append("g").selectAll("text")
   .data(censusData)
   .enter()
   .append("text");
   var circlesText = getCirclesText
-  .attr("x", d => xLinearScale(d[chosenXAxis])+90)
+  .attr("x", d => xLinearScale(d[chosenXAxis])+92)
   .attr("y", d => yLinearScale(d[chosenYAxis])+25)
   .text( function (d) { return d["abbr"]; })
   .attr("font-family", "sans-serif")
-  .attr("font-size", "14px")
-  .attr("fill", "red");
+  .attr("font-size", "10px")
+  .attr("font-weight", 700)
+  .attr("fill", "orange");
 
 
   var labelsGroup = chartGroup.append("g")
@@ -309,18 +315,19 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 
         // replaces chosenXAxis with value
         chosenYAxis = value;
+/*        
         console.log(`chose y axis`);
         console.log(chosenYAxis);
-
+*/
         // functions here found above csv import
         // updates x scale for new data
         ylinearScale = 0
 
         ylinearScale = yScale(censusData, chosenYAxis, height);
-
+/*
         console.log(`ylinearScale rendered y`);
         console.log(yLinearScale(20));
-        
+*/        
 
         // updates x axis with transition
         yAxis = renderYAxis(ylinearScale, yAxis);
@@ -378,9 +385,10 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
 
         // replaces chosenXAxis with value
         chosenXAxis = value;
+/*        
         console.log(`chose x axis`)
         console.log(chosenXAxis)
-
+*/
         // functions here found above csv import
         // updates x scale for new data
         xLinearScale = xScale(censusData, chosenXAxis, width);
