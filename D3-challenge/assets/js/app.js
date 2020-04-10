@@ -26,7 +26,7 @@ var chartGroup = svg.append("g")
 
 // Initial Params
 var chosenXAxis = "poverty";
-var chosenYAxis = "smokes";
+var chosenYAxis = "obesity";
 
 // function used for updating x-scale var upon click on axis label
 function xScale(data, chosenXAxis, wsize) {
@@ -286,14 +286,14 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
     .attr("x", 0)
     .attr("y",-60)
     .attr("value", "obesity") // value to grab for event listener
-    .classed("inactive", true)
+    .classed("active", true)
     .text("Obese (%)");
   var smokesLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("x", 0)
     .attr("y", -40)
     .attr("value", "smokes") // value to grab for event listener
-    .classed("active", true)
+    .classed("inactive", true)
     .text("Smokes (%)");
   var lacksHealthcareLabel = yLabelsGroup.append("text")
     .attr("transform", "rotate(-90)")
