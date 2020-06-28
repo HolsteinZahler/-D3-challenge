@@ -320,7 +320,7 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
         console.log(chosenYAxis);
 */
         // functions here found above csv import
-        // updates x scale for new data
+        // updates y scale for new data
         ylinearScale = 0
 
         ylinearScale = yScale(censusData, chosenYAxis, height);
@@ -329,10 +329,10 @@ d3.csv("assets/data/data.csv").then(function(censusData) {
         console.log(yLinearScale(20));
 */        
 
-        // updates x axis with transition
+        // updates y axis with transition
         yAxis = renderYAxis(ylinearScale, yAxis);
 
-        // updates circles with new x values
+        // updates circles with new y values
         circlesGroup = renderCirclesY(circlesGroup, chosenYAxis, censusData, height);
         circlesText = renderCirclesTextY(circlesText, xLinearScale, chosenXAxis, chosenYAxis, censusData, height);
         
